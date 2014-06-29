@@ -23,7 +23,7 @@ MockBuilder.prototype.createReadStream = function() {
     return this.message;
 };
 
-describe('Version test', function() {
+describe('SMTP Transport Tests', function() {
     var server;
 
     beforeEach(function(done) {
@@ -56,6 +56,7 @@ describe('Version test', function() {
 
     it('Should expose version number', function() {
         var client = smtpTransport();
+        expect(client.name).to.exist;
         expect(client.version).to.exist;
     });
 
