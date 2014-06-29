@@ -1,5 +1,7 @@
 # SMTP transport module for Nodemailer
 
+Applies for Nodemailer v1.x and not for v0.x where transports are built-in.
+
 ## Usage
 
 Install with npm

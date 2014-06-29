@@ -10,6 +10,19 @@ chai.Assertion.includeStack = true;
 
 var PORT_NUMBER = 8397;
 
+function MockBuilder(envelope, message) {
+    this.envelope = envelope;
+    this.message = message;
+}
+
+MockBuilder.prototype.getEnvelope = function() {
+    return this.envelope;
+};
+
+MockBuilder.prototype.createReadStream = function() {
+    return this.message;
+};
+
 describe('Version test', function() {
     var server;
 
@@ -47,7 +60,9 @@ describe('Version test', function() {
     });
 
     it('Should detect wellknown data', function() {
-        var client = smtpTransport({service: 'google mail'});
+        var client = smtpTransport({
+            service: 'google mail'
+        });
         expect(client.options.host).to.equal('smtp.gmail.com');
         expect(client.options.port).to.equal(465);
         expect(client.options.secureConnection).to.be.true;
@@ -58,10 +73,10 @@ describe('Version test', function() {
             port: PORT_NUMBER
         });
 
-        client.send({
+        client.send(new MockBuilder({
             from: 'test@invalid.sender',
             to: 'test@valid.recipient'
-        }, 'test', function(err) {
+        }, 'test'), function(err) {
             expect(err.code).to.equal('EENVELOPE');
             done();
         });
@@ -72,10 +87,10 @@ describe('Version test', function() {
             port: PORT_NUMBER
         });
 
-        client.send({
+        client.send(new MockBuilder({
             from: 'test@valid.sender',
             to: 'test@valid.recipient'
-        }, '', function(err) {
+        }, ''), function(err) {
             expect(err.code).to.equal('EMESSAGE');
             done();
         });
@@ -89,10 +104,10 @@ describe('Version test', function() {
             }
         });
 
-        client.send({
+        client.send(new MockBuilder({
             from: 'test@valid.sender',
             to: 'test@valid.recipient'
-        }, 'message', function(err) {
+        }, 'message'), function(err) {
             expect(err.code).to.equal('EAUTH');
             done();
         });
@@ -115,10 +130,10 @@ describe('Version test', function() {
             callback(null, true);
         });
 
-        client.send({
+        client.send(new MockBuilder({
             from: 'test@valid.sender',
             to: 'test@valid.recipient'
-        }, message, function(err) {
+        }, message), function(err) {
             expect(err).to.not.exist;
             done();
         });
@@ -145,10 +160,10 @@ describe('Version test', function() {
             callback(null, true);
         });
 
-        client.send({
+        client.send(new MockBuilder({
             from: 'test@valid.sender',
             to: 'test@valid.recipient'
-        }, message, function(err) {
+        }, message), function(err) {
             expect(err).to.not.exist;
             done();
         });
