@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/andris9/nodemailer-smtp-transport/issues"
   },
-  "homepage": "https://github.com/andris9/nodemailer-smtp-transport",
+  "homepage": "http://github.com/andris9/nodemailer-smtp-transport",
   "dependencies": {
     "smtp-connection": "^0.1.3",
     "nodemailer-wellknown": "^0.1.0"

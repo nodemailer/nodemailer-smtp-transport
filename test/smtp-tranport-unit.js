@@ -74,10 +74,13 @@ describe('SMTP Transport Tests', function() {
             port: PORT_NUMBER
         });
 
-        client.send(new MockBuilder({
-            from: 'test@invalid.sender',
-            to: 'test@valid.recipient'
-        }, 'test'), function(err) {
+        client.send({
+            data: {},
+            message: new MockBuilder({
+                from: 'test@invalid.sender',
+                to: 'test@valid.recipient'
+            }, 'test')
+        }, function(err) {
             expect(err.code).to.equal('EENVELOPE');
             done();
         });
@@ -88,10 +91,13 @@ describe('SMTP Transport Tests', function() {
             port: PORT_NUMBER
         });
 
-        client.send(new MockBuilder({
-            from: 'test@valid.sender',
-            to: 'test@valid.recipient'
-        }, ''), function(err) {
+        client.send({
+            data: {},
+            message: new MockBuilder({
+                from: 'test@valid.sender',
+                to: 'test@valid.recipient'
+            }, '')
+        }, function(err) {
             expect(err.code).to.equal('EMESSAGE');
             done();
         });
@@ -105,10 +111,13 @@ describe('SMTP Transport Tests', function() {
             }
         });
 
-        client.send(new MockBuilder({
-            from: 'test@valid.sender',
-            to: 'test@valid.recipient'
-        }, 'message'), function(err) {
+        client.send({
+            data: {},
+            message: new MockBuilder({
+                from: 'test@valid.sender',
+                to: 'test@valid.recipient'
+            }, 'message')
+        }, function(err) {
             expect(err.code).to.equal('EAUTH');
             done();
         });
@@ -131,10 +140,13 @@ describe('SMTP Transport Tests', function() {
             callback(null, true);
         });
 
-        client.send(new MockBuilder({
-            from: 'test@valid.sender',
-            to: 'test@valid.recipient'
-        }, message), function(err) {
+        client.send({
+            data: {},
+            message: new MockBuilder({
+                from: 'test@valid.sender',
+                to: 'test@valid.recipient'
+            }, message)
+        }, function(err) {
             expect(err).to.not.exist;
             done();
         });
@@ -161,10 +173,13 @@ describe('SMTP Transport Tests', function() {
             callback(null, true);
         });
 
-        client.send(new MockBuilder({
-            from: 'test@valid.sender',
-            to: 'test@valid.recipient'
-        }, message), function(err) {
+        client.send({
+            data: {},
+            message: new MockBuilder({
+                from: 'test@valid.sender',
+                to: 'test@valid.recipient'
+            }, message)
+        }, function(err) {
             expect(err).to.not.exist;
             done();
         });
