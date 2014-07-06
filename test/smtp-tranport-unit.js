@@ -4,7 +4,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 var chai = require('chai');
 var expect = chai.expect;
-var smtpTransport = require('../lib/smtp-transport');
+var smtpTransport = require('../src/smtp-transport');
 var simplesmtp = require('simplesmtp');
 chai.Assertion.includeStack = true;
 
