@@ -65,7 +65,6 @@ smtpTransport({
 
 See the list of all supported services [here](https://github.com/andris9/nodemailer-wellknown#supported-services).
 
-
 ## License
 
 **MIT**

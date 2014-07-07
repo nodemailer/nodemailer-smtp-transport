@@ -65,7 +65,7 @@ SMTPTransport.prototype.send = function(mail, callback) {
                 return callback(err);
             }
 
-            info.messageId = mail.message.getHeader('message-id');
+            info.messageId = (mail.message.getHeader('message-id') || '').replace(/[<>\s]/g, '');
             return callback(null, info);
         });
     };
