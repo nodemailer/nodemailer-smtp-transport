@@ -42,8 +42,12 @@ function SMTPTransport(options) {
  * @param {Function} callback Callback function
  */
 SMTPTransport.prototype.send = function(mail, callback) {
-    var connection = new SMTPConnection(this.options),
-        returned = false;
+    var connection = new SMTPConnection(this.options);
+    var returned = false;
+
+    connection.once('log', function(log) {
+        this.emit('log', log);
+    }.bind(this));
 
     connection.once('error', function(err) {
         if (returned) {
