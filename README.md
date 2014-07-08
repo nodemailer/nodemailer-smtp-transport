@@ -2,7 +2,7 @@
 
 Applies for Nodemailer v1.x and not for v0.x where transports are built-in.
 
-## Usage
+## Setup
 
 Install with npm
 
@@ -14,6 +14,8 @@ Require to your script
 var nodemailer = require('nodemailer');
 var smtpTransport = require('nodemailer-smtp-transport');
 ```
+
+## Usage
 
 Create a Nodemailer transport object
 
