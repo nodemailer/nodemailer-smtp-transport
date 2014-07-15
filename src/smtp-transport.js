@@ -47,7 +47,7 @@ SMTPTransport.prototype.send = function(mail, callback) {
 
     connection.once('log', function(log) {
         this.emit('log', log);
-    }.bind(this));
+    });
 
     connection.once('error', function(err) {
         if (returned) {
