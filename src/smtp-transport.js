@@ -51,7 +51,7 @@ SMTPTransport.prototype.send = function(mail, callback) {
     var connection = new SMTPConnection(this.options);
     var returned = false;
 
-    connection.once('log', function(log) {
+    connection.on('log', function(log) {
         this.emit('log', log);
     }.bind(this));
 

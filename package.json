@@ -1,6 +1,6 @@
 {
   "name": "nodemailer-smtp-transport",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "SMTP transport for Nodemailer",
   "main": "src/smtp-transport.js",
   "scripts": {
