@@ -4,6 +4,9 @@ var SMTPConnection = require('smtp-connection');
 var packageData = require('../package.json');
 var wellknown = require('nodemailer-wellknown');
 
+var EventEmitter = require('events').EventEmitter;
+var util = require('util');
+
 // expose to the world
 module.exports = function(options) {
     return new SMTPTransport(options);
@@ -16,6 +19,8 @@ module.exports = function(options) {
  * @param {Object} options Connection options
  */
 function SMTPTransport(options) {
+    EventEmitter.call(this);
+
     var hostData;
 
     this.options = options || {};
@@ -34,6 +39,7 @@ function SMTPTransport(options) {
     this.name = 'SMTP';
     this.version = packageData.version + '[client:' + connection.version + ']';
 }
+util.inherits(SMTPTransport, EventEmitter);
 
 /**
  * Sends an e-mail using the selected settings
