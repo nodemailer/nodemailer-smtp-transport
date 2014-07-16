@@ -1,6 +1,6 @@
 {
   "name": "nodemailer-smtp-transport",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "SMTP transport for Nodemailer",
   "main": "src/smtp-transport.js",
   "scripts": {
@@ -21,7 +21,7 @@
   },
   "homepage": "http://github.com/andris9/nodemailer-smtp-transport",
   "dependencies": {
-    "nodemailer-wellknown": "^0.1.0",
+    "nodemailer-wellknown": "^0.1.1",
     "smtp-connection": "^0.1.7"
   },
   "devDependencies": {
