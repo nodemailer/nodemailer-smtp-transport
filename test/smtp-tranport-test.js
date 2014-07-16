@@ -70,7 +70,7 @@ describe('SMTP Transport Tests', function() {
         });
         expect(client.options.host).to.equal('smtp.gmail.com');
         expect(client.options.port).to.equal(465);
-        expect(client.options.secureConnection).to.be.true;
+        expect(client.options.secure).to.be.true;
     });
 
     it('Should fail envelope', function(done) {
