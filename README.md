@@ -112,8 +112,6 @@ var transport = nodemailer.createTransport(smtpPool({
 
 If you do not want to specify the hostname, port and security settings for a well known service, you can use it by its name (case insensitive)
 
-If you do not want to specify the hostname, port and security settings for a well known service, you can use it by its name.
-
 ```javascript
 smtpTransport({
     service: 'gmail',
