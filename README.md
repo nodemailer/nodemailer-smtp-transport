@@ -55,9 +55,7 @@ var transport = nodemailer.createTransport(smtpTransport({
     auth: {
         user: 'username',
         pass: 'password'
-    },
-    maxConnections: 5,
-    maxMessages: 10
+    }
 }));
 ```
 
@@ -102,9 +100,7 @@ var transport = nodemailer.createTransport(smtpPool({
     service: 'gmail',
     auth: {
         xoauth2: generator
-    },
-    maxConnections: 5,
-    maxMessages: 10
+    }
 }));
 ```
 
