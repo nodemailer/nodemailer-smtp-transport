@@ -80,6 +80,8 @@ Install xoauth2 module to use XOauth2 token generators (not included by default)
 
 **XOAuth2 Example**
 
+> **NB!** The correct OAuth2 scope for Gmail is `https://mail.google.com/`
+
 ```javascript
 var generator = require('xoauth2').createXOAuth2Generator({
     user: '{username}',
