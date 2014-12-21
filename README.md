@@ -83,6 +83,7 @@ Install xoauth2 module to use XOauth2 token generators (not included by default)
 > **NB!** The correct OAuth2 scope for Gmail is `https://mail.google.com/`
 
 ```javascript
+var nodemailer = require('nodemailer');
 var generator = require('xoauth2').createXOAuth2Generator({
     user: '{username}',
     clientId: '{Client ID}',
@@ -98,12 +99,20 @@ generator.on('token', function(token){
 });
 
 // login
-var transport = nodemailer.createTransport(smtpPool({
+var transporter = nodemailer.createTransport(({
     service: 'gmail',
     auth: {
         xoauth2: generator
     }
 }));
+
+// send mail
+transporter.sendMail({
+    from: 'sender@example.com',
+    to: 'receiver@example.com',
+    subject: 'hello world!',
+    text: 'Authenticated with OAuth2'
+});
 ```
 
 ## Using well-known services
