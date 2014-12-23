@@ -74,23 +74,6 @@ describe('SMTP Transport Tests', function() {
         });
     });
 
-    it('Should fail message', function(done) {
-        var client = smtpTransport({
-            port: PORT_NUMBER
-        });
-
-        client.send({
-            data: {},
-            message: new MockBuilder({
-                from: 'test@valid.sender',
-                to: 'test@valid.recipient'
-            }, '')
-        }, function(err) {
-            expect(err.code).to.equal('EMESSAGE');
-            done();
-        });
-    });
-
     it('Should fail auth', function(done) {
         var client = smtpTransport({
             port: PORT_NUMBER,
