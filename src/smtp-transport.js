@@ -64,7 +64,10 @@ SMTPTransport.prototype.send = function(mail, callback) {
     });
 
     var sendMessage = function() {
-        connection.send(mail.data.envelope || mail.message.getEnvelope(), mail.message.createReadStream(), function(err, info) {
+        var messageReadStream = mail.message.createReadStream();
+        messageReadStream.on('error', this.emit.bind(this, 'error'));
+
+        connection.send(mail.data.envelope || mail.message.getEnvelope(), messageReadStream, function(err, info) {
             var envelope;
 
             if (returned) {
@@ -84,7 +87,7 @@ SMTPTransport.prototype.send = function(mail, callback) {
             info.messageId = (mail.message.getHeader('message-id') || '').replace(/[<>\s]/g, '');
             return callback(null, info);
         });
-    };
+    }.bind(this);
 
     connection.connect(function() {
         if (returned) {
