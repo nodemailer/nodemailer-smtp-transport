@@ -21,6 +21,7 @@
   },
   "homepage": "http://github.com/andris9/nodemailer-smtp-transport",
   "dependencies": {
+    "mout": "^0.11.0",
     "nodemailer-wellknown": "^0.1.5",
     "smtp-connection": "^1.2.0"
   },

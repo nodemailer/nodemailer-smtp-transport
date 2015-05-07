@@ -2,6 +2,7 @@
 
 var SMTPConnection = require('smtp-connection');
 var packageData = require('../package.json');
+var mout = require('mout');
 var wellknown = require('nodemailer-wellknown');
 
 var EventEmitter = require('events').EventEmitter;
@@ -9,7 +10,7 @@ var util = require('util');
 
 // expose to the world
 module.exports = function(options) {
-    return new SMTPTransport(options);
+    return new SMTPTransport(mout.lang.deepClone(options));
 };
 
 /**
