@@ -253,4 +253,25 @@ describe('SMTP Transport Tests', function() {
             });
         });
     });
+
+    describe('General tests', function(){
+
+        it('Should accept immutable config object', function(){
+            var config = {
+                host: 'example.com',
+                port: 465,
+                auth: {
+                    user: 'example@example.com',
+                    pass: 'example'
+                }
+            };
+
+            Object.freeze(config);
+
+            expect(function(){
+                new smtpTransport(config);
+            }).to.not.throw(Error);
+        });
+
+    });
 });
