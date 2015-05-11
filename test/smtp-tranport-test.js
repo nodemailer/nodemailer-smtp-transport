@@ -28,6 +28,7 @@ MockBuilder.prototype.getHeader = function() {
 };
 
 describe('SMTP Transport Tests', function() {
+    this.timeout(10000);
 
     describe('Anonymous sender tests', function() {
 

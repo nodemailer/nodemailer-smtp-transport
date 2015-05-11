@@ -21,15 +21,17 @@
   },
   "homepage": "http://github.com/andris9/nodemailer-smtp-transport",
   "dependencies": {
+    "clone": "^1.0.2",
     "nodemailer-wellknown": "^0.1.5",
     "smtp-connection": "^1.2.0"
   },
   "devDependencies": {
-    "chai": "^2.1.1",
+    "chai": "^2.3.0",
     "grunt": "^0.4.5",
-    "grunt-contrib-jshint": "^0.11.0",
+    "grunt-contrib-jshint": "^0.11.2",
     "grunt-mocha-test": "^0.12.7",
-    "sinon": "^1.13.0",
-    "smtp-server": "^1.1.0"
+    "mocha": "^2.2.4",
+    "sinon": "^1.14.1",
+    "smtp-server": "^1.4.0"
   }
 }

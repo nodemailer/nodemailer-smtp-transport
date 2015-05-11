@@ -3,6 +3,7 @@
 var SMTPConnection = require('smtp-connection');
 var packageData = require('../package.json');
 var wellknown = require('nodemailer-wellknown');
+var clone = require('clone');
 
 var EventEmitter = require('events').EventEmitter;
 var util = require('util');
@@ -23,7 +24,7 @@ function SMTPTransport(options) {
 
     var hostData;
 
-    this.options = options || {};
+    this.options = options && clone(options) || {};
 
     if (this.options.service && (hostData = wellknown(this.options.service))) {
         Object.keys(hostData).forEach(function(key) {
@@ -34,7 +35,7 @@ function SMTPTransport(options) {
     }
 
     // temporary object
-    var connection = new SMTPConnection(options);
+    var connection = new SMTPConnection(this.options);
 
     this.name = 'SMTP';
     this.version = packageData.version + '[client:' + connection.version + ']';
