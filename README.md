@@ -49,7 +49,7 @@ Where
 **Example**
 
 ```javascript
-var transport = nodemailer.createTransport(smtpTransport({
+var transporter = nodemailer.createTransport(smtpTransport({
     host: 'localhost',
     port: 25,
     auth: {
