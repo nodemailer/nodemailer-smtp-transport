@@ -1,5 +1,8 @@
 # SMTP transport module for Nodemailer
 
+[![Build Status](https://travis-ci.org/andris9/nodemailer-smtp-transport.svg)](https://travis-ci.org/andris9/nodemailer-smtp-transport)
+[![NPM version](https://badge.fury.io/js/nodemailer-smtp-transport.png)](http://badge.fury.io/js/nodemailer-smtp-transport)
+
 Applies for Nodemailer v1.x and not for v0.x where transports are built-in.
 
 ## Setup
