@@ -61,7 +61,16 @@ SMTPTransport.prototype.send = function(mail, callback) {
             return;
         }
         returned = true;
+        connection.close();
         return callback(err);
+    });
+
+    connection.once('end', function() {
+        if (returned) {
+            return;
+        }
+        returned = true;
+        return callback(new Error('Connection closed'));
     });
 
     var sendMessage = function() {
@@ -99,6 +108,7 @@ SMTPTransport.prototype.send = function(mail, callback) {
                 }
 
                 if (err) {
+                    returned = true;
                     connection.close();
                     return callback(err);
                 }
