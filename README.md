@@ -115,6 +115,12 @@ transporter.sendMail({
     to: 'receiver@example.com',
     subject: 'hello world!',
     text: 'Authenticated with OAuth2'
+}, function(error, response) {
+   if (error) {
+        console.log(error);
+   } else {
+        console.log('Message sent');
+   }
 });
 ```
 
