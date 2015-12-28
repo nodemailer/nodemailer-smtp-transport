@@ -49,6 +49,8 @@ Where
     * **options.authMethod** defines preferred authentication method, eg. 'PLAIN'
     * **options.tls** defines additional options to be passed to the socket constructor, eg. *{rejectUnauthorized: true}*
 
+Alternatively you can use connection url with protocol 'smtp:' or 'smtps:'. Use query arguments for additional configuration values.
+
 **Example**
 
 ```javascript
@@ -60,6 +62,14 @@ var transporter = nodemailer.createTransport(smtpTransport({
         pass: 'password'
     }
 }));
+```
+
+Or with connection url (gmail)
+
+```javascript
+var transporter = nodemailer.createTransport(
+    smtpTransport('smtps://username%40gmail.com:password@smtp.gmail.com')
+);
 ```
 
 ## Authentication
