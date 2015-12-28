@@ -4,12 +4,13 @@ var SMTPConnection = require('smtp-connection');
 var packageData = require('../package.json');
 var wellknown = require('nodemailer-wellknown');
 var clone = require('clone');
+var urllib = require('url');
 
 var EventEmitter = require('events').EventEmitter;
 var util = require('util');
 
 // expose to the world
-module.exports = function(options) {
+module.exports = function (options) {
     return new SMTPTransport(options);
 };
 
@@ -24,13 +25,53 @@ function SMTPTransport(options) {
 
     var hostData;
 
+    if (options && typeof options === 'string') {
+        options = {
+            url: options
+        };
+    }
+
     this.options = options && clone(options) || {};
 
     if (this.options.service && (hostData = wellknown(this.options.service))) {
-        Object.keys(hostData).forEach(function(key) {
+        Object.keys(hostData).forEach(function (key) {
             if (!(key in this.options)) {
                 this.options[key] = hostData[key];
             }
+        }.bind(this));
+    }
+
+    // parse a configuration URL into configuration options
+    if (this.options.url) {
+        [urllib.parse(this.options.url, true)].forEach(function (url) {
+            var auth;
+
+            this.options.secure = url.protocol === 'smtps:';
+
+            if (!isNaN(url.port) && Number(url.port)) {
+                this.options.port = Number(url.port);
+            }
+
+            if (url.hostname) {
+                this.options.host = url.hostname;
+            }
+
+            if (url.auth) {
+                auth = url.auth.split(':');
+
+                if (!this.options.auth) {
+                    this.options.auth = {};
+                }
+
+                this.options.auth.user = decodeURIComponent(auth[0]);
+                this.options.auth.pass = decodeURIComponent(auth[1]);
+            }
+
+            Object.keys(url.query || {}).forEach(function (key) {
+                if (!(key in this.options)) {
+                    this.options[key] = url.query[key];
+                }
+            }.bind(this));
         }.bind(this));
     }
 
@@ -48,15 +89,15 @@ util.inherits(SMTPTransport, EventEmitter);
  * @param {Object} mail Mail object
  * @param {Function} callback Callback function
  */
-SMTPTransport.prototype.send = function(mail, callback) {
+SMTPTransport.prototype.send = function (mail, callback) {
     var connection = new SMTPConnection(this.options);
     var returned = false;
 
-    connection.on('log', function(log) {
+    connection.on('log', function (log) {
         this.emit('log', log);
     }.bind(this));
 
-    connection.once('error', function(err) {
+    connection.once('error', function (err) {
         if (returned) {
             return;
         }
@@ -65,7 +106,7 @@ SMTPTransport.prototype.send = function(mail, callback) {
         return callback(err);
     });
 
-    connection.once('end', function() {
+    connection.once('end', function () {
         if (returned) {
             return;
         }
@@ -73,8 +114,8 @@ SMTPTransport.prototype.send = function(mail, callback) {
         return callback(new Error('Connection closed'));
     });
 
-    var sendMessage = function() {
-        connection.send(mail.data.envelope || mail.message.getEnvelope(), mail.message.createReadStream(), function(err, info) {
+    var sendMessage = function () {
+        connection.send(mail.data.envelope || mail.message.getEnvelope(), mail.message.createReadStream(), function (err, info) {
             var envelope;
 
             if (returned) {
@@ -96,13 +137,13 @@ SMTPTransport.prototype.send = function(mail, callback) {
         });
     };
 
-    connection.connect(function() {
+    connection.connect(function () {
         if (returned) {
             return;
         }
 
         if (this.options.auth) {
-            connection.login(this.options.auth, function(err) {
+            connection.login(this.options.auth, function (err) {
                 if (returned) {
                     return;
                 }
