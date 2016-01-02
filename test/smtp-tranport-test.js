@@ -1,10 +1,13 @@
+/* eslint no-unused-expressions:0, no-invalid-this:0 */
+/* globals afterEach, beforeEach, describe, it */
+
 'use strict';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 var chai = require('chai');
 var expect = chai.expect;
-var smtpTransport = require('../src/smtp-transport');
+var smtpTransport = require('../lib/smtp-transport');
 var SMTPServer = require('smtp-server').SMTPServer;
 chai.config.includeStack = true;
 
@@ -74,7 +77,8 @@ describe('SMTP Transport Tests', function () {
 
         it('Should detect wellknown data', function () {
             var client = smtpTransport({
-                service: 'google mail'
+                service: 'google mail',
+                logger: false
             });
             expect(client.options.host).to.equal('smtp.gmail.com');
             expect(client.options.port).to.equal(465);
@@ -83,7 +87,8 @@ describe('SMTP Transport Tests', function () {
 
         it('Should fail envelope', function (done) {
             var client = smtpTransport({
-                port: PORT_NUMBER
+                port: PORT_NUMBER,
+                logger: false
             });
 
             client.send({
@@ -100,7 +105,8 @@ describe('SMTP Transport Tests', function () {
 
         it('Should fail message', function (done) {
             var client = smtpTransport({
-                port: PORT_NUMBER
+                port: PORT_NUMBER,
+                logger: false
             });
 
             client.send({
@@ -120,7 +126,8 @@ describe('SMTP Transport Tests', function () {
                 port: PORT_NUMBER,
                 auth: {
                     user: 'zzz'
-                }
+                },
+                logger: false
             });
 
             client.send({
@@ -136,7 +143,7 @@ describe('SMTP Transport Tests', function () {
         });
 
         it('Should send mail', function (done) {
-            var client = smtpTransport('smtp:localhost:' + PORT_NUMBER);
+            var client = smtpTransport('smtp:localhost:' + PORT_NUMBER + '?logger=false');
             var chunks = [],
                 message = new Array(1024).join('teretere, vana kere\n');
 
@@ -182,16 +189,14 @@ describe('SMTP Transport Tests', function () {
                         if (auth.username !== 'testuser' || auth.password !== 'testpass') {
                             return callback(new Error('Invalid username or password'));
                         }
-                    } else {
-                        if (auth.username !== 'testuser' || auth.accessToken !== 'testtoken') {
-                            return callback(null, {
-                                data: {
-                                    status: '401',
-                                    schemes: 'bearer mac',
-                                    scope: 'my_smtp_access_scope_name'
-                                }
-                            });
-                        }
+                    } else if (auth.username !== 'testuser' || auth.accessToken !== 'testtoken') {
+                        return callback(null, {
+                            data: {
+                                status: '401',
+                                schemes: 'bearer mac',
+                                scope: 'my_smtp_access_scope_name'
+                            }
+                        });
                     }
                     callback(null, {
                         user: 123
@@ -221,7 +226,8 @@ describe('SMTP Transport Tests', function () {
 
         it('Should login and send mail', function (done) {
             var client = smtpTransport({
-                url: 'smtp:testuser:testpass@localhost:' + PORT_NUMBER
+                url: 'smtp:testuser:testpass@localhost:' + PORT_NUMBER,
+                logger: false
             });
             var chunks = [],
                 message = new Array(1024).join('teretere, vana kere\n');
