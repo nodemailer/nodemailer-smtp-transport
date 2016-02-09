@@ -49,6 +49,7 @@ Where
     * **options.debug** if set to true, then logs SMTP traffic, otherwise logs only transaction events
     * **options.authMethod** defines preferred authentication method, eg. 'PLAIN'
     * **options.tls** defines additional options to be passed to the socket constructor, eg. *{rejectUnauthorized: true}*
+    * **getSocket** optional method that is called every time a new connection is made against the SMTP server. This method can provide an existing socket to be used instead of creating a new one
 
 Alternatively you can use connection url with protocol 'smtp:' or 'smtps:'. Use query arguments for additional configuration values.
 
