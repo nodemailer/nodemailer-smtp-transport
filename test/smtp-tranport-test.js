@@ -6,6 +6,7 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 var chai = require('chai');
+var net = require('net');
 var expect = chai.expect;
 var smtpTransport = require('../lib/smtp-transport');
 var SMTPServer = require('smtp-server').SMTPServer;
@@ -228,6 +229,49 @@ describe('SMTP Transport Tests', function () {
             var client = smtpTransport({
                 url: 'smtp:testuser:testpass@localhost:' + PORT_NUMBER,
                 logger: false
+            });
+            var chunks = [],
+                message = new Array(1024).join('teretere, vana kere\n');
+
+            server.on('data', function (connection, chunk) {
+                chunks.push(chunk);
+            });
+
+            server.on('dataReady', function (connection, callback) {
+                var body = Buffer.concat(chunks);
+                expect(body.toString()).to.equal(message.trim().replace(/\n/g, '\r\n'));
+                callback(null, true);
+            });
+
+            client.send({
+                data: {},
+                message: new MockBuilder({
+                    from: 'test@valid.sender',
+                    to: 'test@valid.recipient'
+                }, message)
+            }, function (err) {
+                expect(err).to.not.exist;
+                done();
+            });
+        });
+
+        it('Should login and send mail using proxied socket', function (done) {
+            var client = smtpTransport({
+                url: 'smtp:testuser:testpass@www.example.com:1234',
+                logger: false,
+                getSocket: function (options, callback) {
+                    var socket = net.connect(PORT_NUMBER, 'localhost');
+                    var errHandler = function (err) {
+                        callback(err);
+                    };
+                    socket.on('error', errHandler);
+                    socket.on('connect', function () {
+                        socket.removeListener('error', errHandler);
+                        callback(null, {
+                            connection: socket
+                        });
+                    });
+                }
             });
             var chunks = [],
                 message = new Array(1024).join('teretere, vana kere\n');
