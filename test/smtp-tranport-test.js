@@ -255,6 +255,31 @@ describe('SMTP Transport Tests', function () {
             });
         });
 
+        it('Should verify connection with success', function (done) {
+            var client = smtpTransport({
+                url: 'smtp:testuser:testpass@localhost:' + PORT_NUMBER,
+                logger: false
+            });
+
+            client.verify(function (err, success) {
+                expect(err).to.not.exist;
+                expect(success).to.be.true;
+                done();
+            });
+        });
+
+        it('Should not verify connection', function (done) {
+            var client = smtpTransport({
+                url: 'smtp:testuser:testpass@localhost:999' + PORT_NUMBER,
+                logger: false
+            });
+
+            client.verify(function (err) {
+                expect(err).to.exist;
+                done();
+            });
+        });
+
         it('Should login and send mail using proxied socket', function (done) {
             var client = smtpTransport({
                 url: 'smtp:testuser:testpass@www.example.com:1234',
