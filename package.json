@@ -1,6 +1,6 @@
 {
   "name": "nodemailer-smtp-transport",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "SMTP transport for Nodemailer",
   "main": "lib/smtp-transport.js",
   "scripts": {
@@ -23,7 +23,7 @@
   "dependencies": {
     "nodemailer-shared": "1.0.4",
     "nodemailer-wellknown": "0.1.7",
-    "smtp-connection": "2.3.0"
+    "smtp-connection": "2.3.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
