@@ -1,6 +1,6 @@
 {
   "name": "nodemailer-smtp-transport",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "description": "SMTP transport for Nodemailer",
   "main": "lib/smtp-transport.js",
   "scripts": {
@@ -22,15 +22,16 @@
   "homepage": "http://github.com/andris9/nodemailer-smtp-transport",
   "dependencies": {
     "nodemailer-shared": "1.0.5",
-    "nodemailer-wellknown": "0.1.9",
-    "smtp-connection": "2.5.0"
+    "nodemailer-wellknown": "0.1.10",
+    "smtp-connection": "2.8.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
     "grunt": "^1.0.1",
-    "grunt-eslint": "^18.1.0",
+    "grunt-cli": "^1.2.0",
+    "grunt-eslint": "^19.0.0",
     "grunt-mocha-test": "^0.12.7",
-    "mocha": "^2.4.5",
-    "smtp-server": "^1.9.1"
+    "mocha": "^2.5.3",
+    "smtp-server": "^1.11.0"
   }
 }
