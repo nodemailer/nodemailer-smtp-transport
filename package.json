@@ -23,7 +23,7 @@
   "dependencies": {
     "nodemailer-shared": "1.1.0",
     "nodemailer-wellknown": "0.1.10",
-    "smtp-connection": "2.12.0"
+    "smtp-connection": "4.0.2"
   },
   "devDependencies": {
     "chai": "^3.5.0",
